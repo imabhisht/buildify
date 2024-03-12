@@ -1,22 +1,124 @@
-const { logger,firebase_admin, prisma } = require("../../init")
+const { logger,firebase_admin, prisma, mongodb_client } = require("../../init")
+
+const generateEmailVerification = async (req,type) => {
+    try {    
+        const { email } = req.body;
+
+        // Create Verification Document in MongoDB with TTL of 15mins. If already exists, dont create it
+        const already_verification = await mongodb_client.collection("verification").findOne({
+            email
+        });
+
+        if(already_verification){
+            // console.log(`OTP for ${email} is ${already_verification.otp}`)
+            return already_verification;
+        }
+        const newotp = (Math.floor(100000 + Math.random() * 900000)).toString()
+        const verification = await mongodb_client.collection("verification").insertOne({
+            email,
+            otp: newotp,
+            type: "email",
+            createdAt: new Date()
+        });
+
+        // console.log(`OTP for ${email} is ${newotp}`)
+
+        return verification;
+
+    } catch (error) {
+        throw error;
+    }
+}
+
+const verifiyOTP = async (req) => {
+    try {
+        const { email, otp } = req.body;
+
+        // console.log(req.body)
+
+        const verification = await mongodb_client.collection("verification").findOne({
+            email,
+            otp
+        });
+
+        // console.log(verification)
+
+        if(verification){
+            await mongodb_client.collection("verification").deleteOne({
+                email,
+                otp
+            });
+            return verification
+        }else{
+            throw new Error("Invalid OTP")
+        }
+
+    } catch (error) {
+        throw error;
+    }
+
+}
 
 
-module.exports.createUser = async(req,res) => {
+module.exports.singleLogin = async(req,res) => {
+    try {
+        const { event, email } = req.body;
+
+        // Check Email Exists
+        const user = await prisma.user.findUnique({
+            where: {
+                email
+            }
+        });
+
+
+        if(event==="generate-otp"){
+            if(user){
+                const verification = await generateEmailVerification(req);
+                return res.send({message: "OTP Generated Successfully", ...verification});
+            } else{
+                const verification = await generateEmailVerification(req);
+                return res.send({message: "OTP Successfully Sent",  ...verification});
+            }
+        }
+        else if(event==="verify-otp"){
+            if(user){
+                const verification = await verifiyOTP(req);
+                const login_data = await login(req,res);
+                res.cookie('id_token', login_data.idToken);
+                res.cookie('refresh_token', login_data.refreshToken);
+                return res.send({message: "OTP Verified Successfully", ...login_data});
+            }
+            else{
+                await verifiyOTP(req);
+                const user_data = await createUser(req,res);
+                res.cookie('id_token', user_data.idToken);
+                res.cookie('refresh_token', user_data.refreshToken);
+                return res.send({message: "User created successfully", ...user_data});
+            }
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({message: error.message})
+    }
+}
+
+const createUser = async(req) => {
     let flag = 0;
     let user = null;
     try {
-        const { email, name, password } = req.body;
+        const { email } = req.body;
         user = await firebase_admin.auth().createUser({
-            displayName: name,
+            displayName: "Unknown",
             email,
-            password
+            password: "password"
         })
         if (user) flag = 1;
 
         const user_data = await prisma.user.create({
             data: {
                 id: user.uid,
-                name: name,
+                name: "Unkonwn",
                 email: email
             }
         });
@@ -33,7 +135,7 @@ module.exports.createUser = async(req,res) => {
             },
             body: JSON.stringify({
                 email,
-                password,
+                password: "password",
                 returnSecureToken: true
             })
         });
@@ -43,54 +145,32 @@ module.exports.createUser = async(req,res) => {
             throw new Error(user_login_data.error.message);
         }
 
+        return {
+            message: "User created successfully",
+            id: user.uid,
+            email: user.email,
+            name: user.displayName,
+            expires_in: user_login_data.expiresIn,
+            login_token,
+            idToken: user_login_data.idToken,
+            refreshToken: user_login_data.refreshToken
+        }
+
         // Set the idToken and refreshToken in the cookies
-        res.cookie('id_token', user_login_data.idToken);
-        res.cookie('refresh_token', user_login_data.refreshToken);
-        return res.send({message: "User created successfully", token: login_token});
 
     } catch (error) {
         if (flag === 1) {
             await firebase_admin.auth().deleteUser(user.uid)
         }
         logger.debug(`[User-Controller] Account not created with reason: ${error.message}`)
-        return res.status(500).send({message: error.message})
+        throw error;
     }
 }
 
-module.exports.refreshToken = async(req,res) => {
-    try {
-        const { refresh_token } = req.cookies;
-        const user = await fetch(`https://securetoken.googleapis.com/v1/token?key=${process.env.FIREBASE_API_KEY}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                grant_type: "refresh_token",
-                refresh_token
-            })
-        });
-        const user_data = await user.json();
-        if (user_data.error) {
-            throw new Error(user_data.error.message);
-        }
-        res.cookie('id_token', user_data.id_token);
-        res.cookie('refresh_token', user_data.refresh_token);
-        return res.send({
-            message: "Token refreshed successfully", 
-            id: user_data.user_id,
-            expires_in: user_data.expires_in
-        });
-    } catch (error) {
-        logger.debug(`[User-Controller] Token not refreshed with reason: ${error.message}`)
-        return res.status(500).send({message: error.message})
-    }
 
-}
-
-module.exports.login = async(req,res) => {
+const login = async(req) => {
     try {
-        const { email, password } = req.body;
+        const { email } = req.body;
 
         // Check Email and Password
         const user = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.FIREBASE_API_KEY}`, {
@@ -100,8 +180,8 @@ module.exports.login = async(req,res) => {
             },
             body: JSON.stringify({
                 email,
-                password,
-                returnSecureToken: true
+                returnSecureToken: true,
+                password: "password"
             })
         });
 
@@ -111,20 +191,22 @@ module.exports.login = async(req,res) => {
         }
 
         // Set the idToken and refreshToken in the cookies
-        res.cookie('id_token', user_data.idToken);
-        res.cookie('refresh_token', user_data.refreshToken);
+        // res.cookie('id_token', user_data.idToken);
+        // res.cookie('refresh_token', user_data.refreshToken);
 
-        return res.send({
+        return {
             message: "User logged in successfully",
             id: user_data.localId,
             email: user_data.email,
             name: user_data.displayName,
-            expires_in: user_data.expiresIn
-    });
+            expires_in: user_data.expiresIn,
+            idToken: user_data.idToken,
+            refreshToken:  user_data.refreshToken
+    };
 
     } catch (error) {
         logger.debug(`[User-Controller] Account not logged in with reason: ${error.message}`)
-        return res.status(500).send({message: error.message})
+        throw error;
     }
 }
 
@@ -175,4 +257,35 @@ module.exports.updateUser = async(req,res) => {
         logger.debug(`[User-Controller] Account not updated with reason: ${error.message}`)
         return res.status(500).send({message: error.message})
     }
+}
+
+module.exports.refreshToken = async(req,res) => {
+    try {
+        const { refresh_token } = req.cookies;
+        const user = await fetch(`https://securetoken.googleapis.com/v1/token?key=${process.env.FIREBASE_API_KEY}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                grant_type: "refresh_token",
+                refresh_token
+            })
+        });
+        const user_data = await user.json();
+        if (user_data.error) {
+            throw new Error(user_data.error.message);
+        }
+        res.cookie('id_token', user_data.id_token);
+        res.cookie('refresh_token', user_data.refresh_token);
+        return res.send({
+            message: "Token refreshed successfully", 
+            id: user_data.user_id,
+            expires_in: user_data.expires_in
+        });
+    } catch (error) {
+        logger.debug(`[User-Controller] Token not refreshed with reason: ${error.message}`)
+        return res.status(500).send({message: error.message})
+    }
+
 }

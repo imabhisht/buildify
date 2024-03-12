@@ -7,13 +7,13 @@ router.get("/",(req,res) => {
     return res.send("User Route!!");
 })
 
-router.post("/account/create", userController.createUser);
+// router.post("/account/create", userController.createUser);
 
 router.delete("/account", verifyAccessToken ,userController.deleteUser);
 
 
 
-router.post("/login", userController.login);
+router.post("/login", userController.singleLogin);
 
 router.post("/token/refresh", userController.refreshToken);
 
