@@ -10,10 +10,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@grapesjs/react": "^1.0.0",
+    "axios": "^1.6.7",
+    "destack": "^2.1.4",
+    "firebase": "^10.8.1",
+    "grapesjs": "^0.21.8",
+    "grapesjs-component-twitch": "^1.0.6",
+    "grapesjs-custom-code": "^1.0.2",
+    "grapesjs-ga": "^1.0.2",
+    "grapesjs-plugin-forms": "^2.0.6",
+    "grapesjs-tailwind": "^1.0.11",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.1.1",
+    "react-router-dom": "^6.22.2"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.7",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
