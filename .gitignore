@@ -1,0 +1,6 @@
+node_modules
+# Keep environment variables out of version control
+.env
+
+*.log
+src/init/buildify-ai-firebase-adminsdk-gb80b-7fdb582ea1.json
