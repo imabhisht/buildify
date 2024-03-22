@@ -74,6 +74,7 @@ export default function Example() {
       <div className="flex h-full flex-col">
         {/* Top nav*/}
         <header className="relative flex h-16 flex-shrink-0 items-center bg-white">
+          {/* Desktop nav area */}
           <div className="hidden md:flex md:min-w-0 md:flex-1 md:items-center md:justify-between">
             <div className="min-w-0 flex-1">
               <div className="relative max-w-2xl text-gray-400 focus-within:text-gray-500">
@@ -84,7 +85,7 @@ export default function Example() {
                   id="desktop-search"
                   type="search"
                   placeholder="Search"
-                  className="block w-full bg-white  border-transparent pl-12 placeholder-gray-500 focus:border-transparent focus:ring-0 sm:text-sm"
+                  className="block w-full border-transparent pl-12 placeholder-gray-500 focus:border-transparent focus:ring-0 sm:text-sm"
                 />
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center pl-4">
                   <MagnifyingGlassIcon className="h-5 w-5" aria-hidden="true" />
@@ -105,10 +106,7 @@ export default function Example() {
               </nav>
               <div className="flex items-center space-x-8">
                 <span className="inline-flex">
-                  <a
-                    href="#"
-                    className="-mx-1 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500"
-                  >
+                  <a href="#" className="-mx-1 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500">
                     <span className="sr-only">View notifications</span>
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
                   </a>
@@ -117,11 +115,7 @@ export default function Example() {
                 <Menu as="div" className="relative inline-block text-left">
                   <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2">
                     <span className="sr-only">Open user menu</span>
-                    <img
-                      className="h-8 w-8 rounded-full"
-                      src={user.imageUrl}
-                      alt=""
-                    />
+                    <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
                   </Menu.Button>
 
                   <Transition
@@ -140,8 +134,8 @@ export default function Example() {
                             <a
                               href="#"
                               className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
+                                active ? 'bg-gray-100' : '',
+                                'block px-4 py-2 text-sm text-gray-700'
                               )}
                             >
                               Your Profile
@@ -153,8 +147,8 @@ export default function Example() {
                             <a
                               href="#"
                               className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
+                                active ? 'bg-gray-100' : '',
+                                'block px-4 py-2 text-sm text-gray-700'
                               )}
                             >
                               Sign Out
@@ -172,14 +166,8 @@ export default function Example() {
 
         {/* Bottom section */}
         <div className="flex min-h-0 flex-1 overflow-hidden">
-          <main className="min-w-0 flex-1 border-t border-gray-600 bg-white lg:flex">
-            <section
-              aria-labelledby="primary-heading"
-              className="flex h-full min-w-0 flex-1 flex-col overflow-y-auto lg:order-last"
-            >
-              <h1 id="primary-heading" className="sr-only">
-                Home
-              </h1>
+          <main className="min-w-0 flex-1 border-t border-gray-200 lg:flex">
+            <section aria-labelledby="primary-heading" className="flex h-full min-w-0 flex-1 flex-col overflow-y-auto lg:order-last">
               {/* Your content */}
             </section>
           </main>

@@ -73,14 +73,14 @@ export default function DashboardLayout() {
             <nav
               style={{ height: "100vh" }}
               aria-label="Sidebar"
-              className="hidden md:block md:flex-shrink-0 md:overflow-y-auto md:bg-white"
+              className="hidden md:block md:flex-shrink-0 md:overflow-y-auto md:bg-gray-800"
             >
               <header className="relative flex h-16 flex-shrink-0 items-center bg-white">
                 {/* Logo area */}
                 <div className="absolute inset-y-0 left-0 md:static md:flex-shrink-0">
                   <a
                     href="#"
-                    className="flex h-16 w-16 items-center justify-center bg-[#0d0f8c] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 md:w-20"
+                    className="flex h-16 w-16 items-center justify-center bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 md:w-20"
                   >
                     <img
                       className="h-8 w-auto"
