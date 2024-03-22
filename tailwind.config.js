@@ -5,7 +5,20 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        default: '#1EB2A6',
+        light: {
+          default: '#1EB2A6',
+          primary_light: '#fff',
+          primary_hover: '#1EB2A6',
+        },
+        dark: {
+          default: '#334756',
+          primary_light: "#1A202C",
+        },
+      },
+    },
   },
   darkMode: 'selector',
   plugins: [
