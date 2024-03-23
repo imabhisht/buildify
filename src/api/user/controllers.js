@@ -10,7 +10,7 @@ const generateEmailVerification = async (req,type) => {
         });
 
         if(already_verification){
-            // console.log(`OTP for ${email} is ${already_verification.otp}`)
+            console.log(`OTP for ${email} is ${already_verification.otp}`)
             return already_verification;
         }
         const newotp = (Math.floor(100000 + Math.random() * 900000)).toString()
@@ -21,7 +21,7 @@ const generateEmailVerification = async (req,type) => {
             createdAt: new Date()
         });
 
-        // console.log(`OTP for ${email} is ${newotp}`)
+        console.log(`OTP for ${email} is ${newotp}`)
 
         return verification;
 
