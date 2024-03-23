@@ -1,2 +1,9 @@
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:5000';
+import dotenv from 'dotenv';
+// dotenv.config();
+import AuthAPIService from './auth/index';
+
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;;
+
+// Export the AUTH API
+export const AuthAPI = AuthAPIService;

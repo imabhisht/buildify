@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Route, RouterProvider ,createBrowserRouter } f
 import DashboardLayout from "./routes/DashboardLayout";
 import HomePage from "./pages/Home/Home";
 import Editor from "./pages/Editor/App";
-
+import ProjectPage from "./pages/Project/Projects";
+import LoginPage from "./pages/Auth/Login";
 
 const router = createBrowserRouter([
   {
@@ -13,11 +14,16 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       { path: "/", element: <HomePage /> },
+      { path: "/project", element: <ProjectPage /> },
     ],
   },
   {
     path: "/studio",
     element: <Editor />
+  },
+  {
+    path: "/login",
+    element: <LoginPage />
   }
 ]);
 
