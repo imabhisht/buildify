@@ -10,6 +10,7 @@ import HomePage from "./pages/Home/Home";
 import Editor from "./pages/Editor/App";
 import ProjectPage from "./pages/Project/Projects";
 import LoginPage from "./pages/Auth/Login";
+import CreateProjectsPage from "./pages/Project/CreateProjects";
 
 // Components
 import LoadingSpinner from "./components/Loading";
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
       )},
       { path: "/project", element: (
         <ProtectedRoute>
-          <HomePage />
+          <ProjectPage />
         </ProtectedRoute>
       )},
     ],
@@ -41,6 +42,14 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />
+  },
+  {
+    path: "/project/create",
+    element: (
+      <ProtectedRoute>
+        <CreateProjectsPage />
+      </ProtectedRoute>
+    )
   }
 ]);
 
@@ -51,7 +60,7 @@ export default () => {
     // Simulate an API call or any asynchronous operation
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 0);
   }, []);
 
   

@@ -1,0 +1,80 @@
+{
+    "step-1": {
+        "data":{
+            "title": "What you want to build?",
+            "options": [
+                { "id": "step_1_portfolio", "title": "Portfolio" }
+            ]
+        }
+    },
+    "step-2": {
+        "data": [
+            {
+                "parent": "step_1_portfolio",
+                "title": "What you want to showcase?",
+                "options": [
+                    { "id": "step_2_portfolio_personal", "title": "Personal" },
+                    { "id": "step_2_portfolio_development", "title": "Development" }
+                ]
+            }
+        ]
+    },
+    "step-3": {
+        "data": [
+            {
+                "parent": "step_2_portfolio_personal",
+                "title": "What you want to showcase?",
+                "options": [
+                    { "id": "step_3_portfolio_personal_resume", "title": "Resume" },
+                    { "id": "step_3_portfolio_personal_blog", "title": "Blog" }
+                ]
+            },
+            {
+                "parent": "step_2_portfolio_development",
+                "title": "What you want to showcase?",
+                "options": [
+                    { "id": "step_3_portfolio_development_fullstack", "title": "Full Stack Engineer" },
+                    { "id": "step_3_portfolio_development_ai_engineer", "title": "AI ML Engineer" }
+                ]
+            }
+        ]
+    },
+    "step-4": {
+        "data": [
+            {
+                "parent": "step_3_portfolio_personal_resume",
+                "title": "What you want to showcase?",
+                "options": [
+                    { "id": "step_4_portfolio_personal_resume_education", "title": "Education" },
+                    { "id": "step_4_portfolio_personal_resume_experience", "title": "Experience" }
+                ]
+            },
+            {
+                "parent": "step_3_portfolio_personal_blog",
+                "title": "What you want to showcase?",
+                "options": [
+                    { "id": "step_4_portfolio_personal_blog_travel", "title": "Travel" },
+                    { "id": "step_4_portfolio_personal_blog_food", "title": "Food" }
+                ]
+            },
+            {
+                "parent": "step_3_portfolio_development_fullstack",
+                "title": "What you want to showcase?",
+                "options": [
+                    { "id": "step_4_portfolio_development_fullstack_projects", "title": "Projects" },
+                    { "id": "step_4_portfolio_development_fullstack_skills", "title": "Skills" }
+                ]
+            },
+            {
+                "parent": "step_3_portfolio_development_ai_engineer",
+                "title": "What you want to showcase?",
+                "options": [
+                    { "id": "step_4_portfolio_development_ai_engineer_projects", "title": "Projects" },
+                    { "id": "step_4_portfolio_development_ai_engineer_skills", "title": "Skills" }
+                ]
+            }
+        ]
+    }
+    
+    
+}
