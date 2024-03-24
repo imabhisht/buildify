@@ -189,10 +189,12 @@ const login = async(req) => {
         if (user_data.error) {
             throw new Error(user_data.error.message);
         }
-
+        console.log(user_data)
         // Set the idToken and refreshToken in the cookies
         // res.cookie('id_token', user_data.idToken);
         // res.cookie('refresh_token', user_data.refreshToken);
+        const login_token = await firebase_admin.auth().createCustomToken(user_data.localId);
+
 
         return {
             message: "User logged in successfully",
@@ -201,7 +203,8 @@ const login = async(req) => {
             name: user_data.displayName,
             expires_in: user_data.expiresIn,
             idToken: user_data.idToken,
-            refreshToken:  user_data.refreshToken
+            refreshToken:  user_data.refreshToken,
+            login_token
     };
 
     } catch (error) {
