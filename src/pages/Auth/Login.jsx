@@ -1,8 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import SimpleNotification from "../../components/Notification/Simple";
 import { AuthAPI } from "../../api";
+import { useNavigate , Navigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
+import LoadingSpinner from "../../components/Loading";
 
 export default () => {
+  const { loading, currentUser } = useContext(AuthContext);
+
+  if (loading) {
+    return <LoadingSpinner />
+  }
+
+  if (currentUser) {
+    return <Navigate to="/" replace />;
+  }
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [stage, setStage] = useState("email");
@@ -30,6 +43,7 @@ export default () => {
         // Login user
         setIsLoggedIn(true);
         localStorage.setItem('isLoggedIn', 'true');
+        navigate("/");
       }
     } catch (error) {}
   };
