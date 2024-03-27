@@ -33,8 +33,11 @@
                 "parent": "step_2_portfolio_development",
                 "title": "What you want to showcase?",
                 "options": [
-                    { "id": "step_3_portfolio_development_fullstack", "title": "Full Stack Engineer" },
-                    { "id": "step_3_portfolio_development_ai_engineer", "title": "AI ML Engineer" }
+                    { "id": "step_3_portfolio_development", "title": "Full Stack Engineer" },
+                    { "id": "step_3_portfolio_development", "title": "AI ML Engineer" },
+                    { "id": "step_3_portfolio_development", "title": "Data Engineer" },
+                    { "id": "step_3_portfolio_development", "title": "Frontend Engineer" },
+                    { "id": "step_3_portfolio_development", "title": "Backend Engineer" }
                 ]
             }
         ]
@@ -42,35 +45,87 @@
     "step-4": {
         "data": [
             {
-                "parent": "step_3_portfolio_personal_resume",
-                "title": "What you want to showcase?",
-                "options": [
-                    { "id": "step_4_portfolio_personal_resume_education", "title": "Education" },
-                    { "id": "step_4_portfolio_personal_resume_experience", "title": "Experience" }
+                "parent": "step_3_portfolio_development",
+                "title": "Lets connect your social profiles",   
+                "options":[
+                    {"id": "step_4_portfolio_development_github", "title": "Github" , "placeholder": "Github Profile..."},
+                    {"id": "step_4_portfolio_development_linkedin", "title": "Linkedin", "placeholder": "Linkedin Profile..."},
+                    {"id": "step_4_portfolio_development_medium", "title": "Medium", "placeholder": "Medium Profile..."},
+                    {"id": "step_4_portfolio_development_twitter", "title": "Twitter", "placeholder": "Twitter Profile..."},
+                    {"id": "step_4_portfolio_development_resume", "title": "Resume", "placeholder": "Resume Profile..."}
                 ]
             },
             {
-                "parent": "step_3_portfolio_personal_blog",
+                "parent": "dummy",
+                "options":[
+                    {"id": "step_4_portfolio_development_github", "title": "Github"},
+                    {"id": "step_4_portfolio_development_linkedin", "title": "Linkedin"},
+                    {"id": "step_4_portfolio_development_medium", "title": "Medium"},
+                    {"id": "step_4_portfolio_development_stackoverflow", "title": "Stackoverflow"},
+                    {"id": "step_4_portfolio_development_stackoverflow", "title": "Stackoverflow", "placeholder": "Stackoverflow Profile..."},
+                    {"id": "step_4_portfolio_development_twitter", "title": "Twitter"},
+                    {"id": "step_4_portfolio_development_facebook", "title": "Facebook"},
+                    {"id": "step_4_portfolio_development_instagram", "title": "Instagram"},
+                    {"id": "step_4_portfolio_development_youtube", "title": "Youtube"},
+                    {"id": "step_4_portfolio_development_blog", "title": "Blog"},
+                    {"id": "step_4_portfolio_development_resume", "title": "Resume"},
+                    {"id": "step_4_portfolio_development_facebook", "title": "Facebook", "placeholder": "Facebook Profile..."},
+                    {"id": "step_4_portfolio_development_instagram", "title": "Instagram", "placeholder": "Instagram Profile..."},
+                    {"id": "step_4_portfolio_development_youtube", "title": "Youtube", "placeholder": "Youtube Profile..."},
+                    {"id": "step_4_portfolio_development_blog", "title": "Blog", "placeholder": "Blog Profile..."}
+                ]
+
+            }
+        ]
+    },
+    "step-5":{
+        "data": [
+            {
+                "parent": "step_4_portfolio_personal_resume_education",
                 "title": "What you want to showcase?",
                 "options": [
-                    { "id": "step_4_portfolio_personal_blog_travel", "title": "Travel" },
-                    { "id": "step_4_portfolio_personal_blog_food", "title": "Food" }
+                    { "id": "step_5_portfolio_personal_resume_education_school", "title": "School" },
+                    { "id": "step_5_portfolio_personal_resume_education_college", "title": "College" }
                 ]
             },
             {
-                "parent": "step_3_portfolio_development_fullstack",
+                "parent": "step_4_portfolio_personal_resume_experience",
                 "title": "What you want to showcase?",
                 "options": [
-                    { "id": "step_4_portfolio_development_fullstack_projects", "title": "Projects" },
-                    { "id": "step_4_portfolio_development_fullstack_skills", "title": "Skills" }
+                    { "id": "step_5_portfolio_personal_resume_experience_internship", "title": "Internship" },
+                    { "id": "step_5_portfolio_personal_resume_experience_job", "title": "Job" }
                 ]
             },
             {
-                "parent": "step_3_portfolio_development_ai_engineer",
+                "parent": "step_4_portfolio_development_fullstack_projects",
                 "title": "What you want to showcase?",
                 "options": [
-                    { "id": "step_4_portfolio_development_ai_engineer_projects", "title": "Projects" },
-                    { "id": "step_4_portfolio_development_ai_engineer_skills", "title": "Skills" }
+                    { "id": "step_5_portfolio_development_fullstack_projects_personal", "title": "Personal" },
+                    { "id": "step_5_portfolio_development_fullstack_projects_company", "title": "Company" }
+                ]
+            },
+            {
+                "parent": "step_4_portfolio_development_fullstack_skills",
+                "title": "What you want to showcase?",
+                "options": [
+                    { "id": "step_5_portfolio_development_fullstack_skills_frontend", "title": "Frontend" },
+                    { "id": "step_5_portfolio_development_fullstack_skills_backend", "title": "Backend" }
+                ]
+            },
+            {
+                "parent": "step_4_portfolio_development_ai_engineer_projects",
+                "title": "What you want to showcase?",
+                "options": [
+                    { "id": "step_5_portfolio_development_ai_engineer_projects_personal", "title": "Personal" },
+                    { "id": "step_5_portfolio_development_ai_engineer_projects_company", "title": "Company" }
+                ]
+            },
+            {
+                "parent": "step_4_portfolio_development_ai_engineer_skills",
+                "title": "What you want to showcase?",
+                "options": [
+                    { "id": "step_5_portfolio_development_ai_engineer_skills_ml", "title": "Machine Learning" },
+                    { "id": "step_5_portfolio_development_ai_engineer_skills_dl", "title": "Deep Learning" }
                 ]
             }
         ]

@@ -1,7 +1,9 @@
+import { useState } from "react";
+
 export default (props) => {
-  console.log(props);
   const data = props.data;
-  
+  const [localSelection, setLocalSelection] = useState("");
+   
   return (
     <div className="flex flex-col items-center">
       <p className="text-lg font-medium text-gray-600">Hello, Oliver!</p>
@@ -21,7 +23,7 @@ export default (props) => {
               type="radio"
               name="framework"
               id={option.id}
-              onChange={() => props.setParent(option.id)}
+              onChange={() => setLocalSelection(option.id)}
             />
             <label
               className="absolute top-0 h-full w-full cursor-pointer rounded-full border peer-checked:border-blue-700"
@@ -35,7 +37,10 @@ export default (props) => {
         ))}
       </div>
 
-      <button onClick={() => props.setStep(2)} className="group mt-10 flex w-40 items-center justify-center rounded-lg bg-blue-700 py-2 text-center font-bold text-white transition">
+      <button onClick={() => props.setStep({
+          step: props.step.step+1,
+          parent: localSelection
+      })} className="group mt-10 flex w-40 items-center justify-center rounded-lg bg-blue-700 py-2 text-center font-bold text-white transition">
         Continue
         <svg
           xmlns="http://www.w3.org/2000/svg"

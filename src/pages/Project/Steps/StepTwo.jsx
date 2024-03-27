@@ -1,9 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
+import ManualPrompt from "../ManualPrompt.json";
 
 export default (props) => {
-  const data = props.data.find(item => item.parent === props.parent);
-  const [selected, setSelected] = React.useState(null);
-  console.log("Step Two", data)
+  const stepData = ManualPrompt["step-2"]
+  const data = stepData.data.find(item => item.parent === props.step.parent);
+  const [localSelection, setLocalSelection] = useState("");
+
   return (
     <div className="flex flex-col items-center">
       <p className="text-lg font-medium text-gray-600">Hello, Oliver!</p>
@@ -23,7 +25,7 @@ export default (props) => {
               type="radio"
               name="framework"
               id={option.id}
-              onChange={() => selected(option.id)}
+              onChange={() => setLocalSelection(option.id)}
             />
             <label
               className="absolute top-0 h-full w-full cursor-pointer rounded-full border peer-checked:border-blue-700"
@@ -37,10 +39,10 @@ export default (props) => {
         ))}
       </div>
 
-      <button onClick={() => {
-        props.setStep(3)
-        props.setParent(selected)
-        }} className="group mt-10 flex w-40 items-center justify-center rounded-lg bg-blue-700 py-2 text-center font-bold text-white transition">
+      <button onClick={() => props.setStep({
+         step: props.step.step+1,
+         parent: localSelection
+      })} className="group mt-10 flex w-40 items-center justify-center rounded-lg bg-blue-700 py-2 text-center font-bold text-white transition">
         Continue
         <svg
           xmlns="http://www.w3.org/2000/svg"

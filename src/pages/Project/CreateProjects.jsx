@@ -2,13 +2,16 @@ import React from "react";
 import StepOne from "./Steps/StepOne";
 import StepTwo from "./Steps/StepTwo";
 import StepThree from "./Steps/StepThree";
+import StepFour from "./Steps/StepFour";
 import ManualPrompt from "./ManualPrompt.json"
 
 export default () => {
  
-    const [step, setStep] = React.useState(1);
-    const configStep = `step-${step}`;
-    const [parent, setParent] = React.useState(null);
+    const [step, setStep] = React.useState({
+      step: 1,
+      parent: ""
+    });
+    const configStep = `step-${step.step}`;
 
   const config = {
     "step-1": {
@@ -23,7 +26,14 @@ export default () => {
         ...ManualPrompt["step-3"],
         component: StepThree,
     },
+    "step-4":{
+      ...ManualPrompt["step-4"],
+      component: StepFour
+    }
   };
+
+  console.log(typeof(`w-${(step.step)}/6`));
+
 
   return (
     <div
@@ -34,13 +44,11 @@ export default () => {
       }}
     >
       <div className="relative flex w-[40rem] flex-col justify-center overflow-hidden rounded-lg bg-white/50 py-32">
-        <span className={`absolute top-0 h-1 w-${step.toString()}/6 bg-blue-600`}></span>
+        <span style={{width: `${((step.step)/6)*100}%`}} className={"absolute top-0 h-1 bg-blue-600"}></span>
         {React.createElement(config[configStep].component, {
             data: config[configStep].data,
             step: step,
             setStep: setStep,
-            parent: parent,
-            setParent: setParent,
             })
         }
       </div>
